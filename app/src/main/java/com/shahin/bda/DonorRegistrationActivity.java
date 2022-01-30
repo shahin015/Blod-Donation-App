@@ -118,6 +118,7 @@ public class DonorRegistrationActivity extends AppCompatActivity {
                startActivityForResult(intent, 1);
             }
         });
+        ////Shhain rahman
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
