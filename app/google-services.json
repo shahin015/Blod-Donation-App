@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "254740471740",
+    "firebase_url": "https://blod-donet-default-rtdb.firebaseio.com",
+    "project_id": "blod-donet",
+    "storage_bucket": "blod-donet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254740471740:android:8a100ff3b3af590cb755b9",
+        "android_client_info": {
+          "package_name": "com.shahin.bda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "254740471740-ids0us6a52pq2c9lqt4eqtmjaa919rch.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shahin.bda",
+            "certificate_hash": "d4f7d4097add002488137990c01043928d2ae5cb"
+          }
+        },
+        {
+          "client_id": "254740471740-rm09n97n9nmuplsa730a1pi7c7008iii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIU0__JA-PomFYso4Umgb6lHjD1xKFhn8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254740471740-rm09n97n9nmuplsa730a1pi7c7008iii.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
