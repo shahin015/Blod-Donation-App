@@ -9,7 +9,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +29,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.shahin.bda.Adapter.UserAdapter;
 import com.shahin.bda.Model.User;
 
@@ -108,6 +116,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
+
         nav_profile_image = nav_view.getHeaderView(0).findViewById(R.id.nav_user_image);
         nav_fullname = nav_view.getHeaderView(0).findViewById(R.id.nav_user_fullname);
         nav_email = nav_view.getHeaderView(0).findViewById(R.id.nav_user_email);
@@ -159,6 +168,30 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
+    }
+
+    private void ParmitionClass() {
+
+
+        Dexter.withContext(getApplicationContext()).withPermission(Manifest.permission.CALL_PHONE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
+                        permissionToken.continuePermissionRequest();
+                    }
+                }).check();
 
     }
 
@@ -296,4 +329,5 @@ public class MainActivity extends AppCompatActivity
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

@@ -1,15 +1,23 @@
 package com.shahin.bda.Adapter;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -21,10 +29,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.shahin.bda.Email.JavaMailApi;
+import com.shahin.bda.MainActivity;
 import com.shahin.bda.Model.User;
 import com.shahin.bda.R;
 
+import java.net.URI;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,6 +52,8 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
 
     private Context context;
     private List<User> userList;
+    String forcall;
+    private final int REQUST_PHONE=1;
 
     public UserAdapter(Context context, List<User> userList) {
         this.context = context;
@@ -64,6 +82,31 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
          holder.phoneNumber.setText(user.getPhonenumber());
          holder.userName.setText(user.getName());
          holder.bloodGroup.setText(user.getBloodgroup());
+         holder.callnow.setText("Call Now");
+         String phonenamber=holder.phoneNumber.getText().toString();
+         forcall=String.valueOf(phonenamber);
+         String name=holder.userName.getText().toString();
+
+
+         
+         holder.callnow.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+
+
+
+                 if (phonenamber.trim().length()>10){
+                     Toast.makeText(context.getApplicationContext(), name+" কে কল করা হচ্ছে", Toast.LENGTH_SHORT).show();
+                     
+                     ParmitionClass();
+                 }else {
+                     Toast.makeText(context.getApplicationContext(), phonenamber+" This Phone NO Invalid", Toast.LENGTH_SHORT).show();
+                 }
+
+
+             }
+         });
+         
 
         Glide.with(context).load(user.getProfilepictureurl()).into(holder.userProfileImage);
 
@@ -139,6 +182,8 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
 
     }
 
+
+
     @Override
     public int getItemCount() {
         return userList.size();
@@ -148,7 +193,7 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
 
         public CircleImageView userProfileImage;
         public TextView type, userName, userEmail, phoneNumber, bloodGroup;
-        public Button emailNow;
+        public Button emailNow,callnow;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -160,6 +205,7 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
             phoneNumber = itemView.findViewById(R.id.phoneNumber);
             bloodGroup = itemView.findViewById(R.id.bloodGroup);
             emailNow = itemView.findViewById(R.id.emailNow);
+            callnow=itemView.findViewById(R.id.calllNow);
 
         }
     }
@@ -176,4 +222,33 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
 
         reference.push().setValue(hashMap);
     }
+
+    private void ParmitionClass() {
+
+
+        Dexter.withContext(context.getApplicationContext()).withPermission(Manifest.permission.CALL_PHONE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+
+
+                        String dail="tel:"+forcall;
+                        context.startActivity(new Intent(Intent.ACTION_CALL,Uri.parse(dail)));
+                                            }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
+                        permissionToken.continuePermissionRequest();
+                    }
+                }).check();
+
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.shahin.bda;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,18 +12,51 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class SplashScreenActivity extends AppCompatActivity {
 
     private ImageView logo;
     private TextView title, slogan;
 
     Animation topAnimation, bottomAnimation;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuth = FirebaseAuth.getInstance();
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = mAuth.getCurrentUser();
+                if (user !=null){
+                    Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+
+                }
+            }
+        };
+
+
+
+
+
 
         logo = findViewById(R.id.logo);
         title = findViewById(R.id.title);
@@ -40,11 +74,17 @@ public class SplashScreenActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+
+                mAuth.addAuthStateListener(authStateListener);
+
+//
+//                Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+//                startActivity(intent);
+//                finish();
             }
         }, SPLASH_SCREEN);
 
     }
+
+
 }

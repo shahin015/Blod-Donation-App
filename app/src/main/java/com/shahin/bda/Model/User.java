@@ -1,7 +1,7 @@
 package com.shahin.bda.Model;
 
 public class User {
-    String name, bloodgroup, id, email, idnumber, phonenumber,profilepictureurl,search,type;
+    String name, bloodgroup, id, email, idnumber, phonenumber,profilepictureurl,search,type,callnow;
 
     public User() {
     }
@@ -16,6 +16,7 @@ public class User {
         this.profilepictureurl = profilepictureurl;
         this.search = search;
         this.type = type;
+        this.callnow=callnow;
     }
 
     public String getName() {
@@ -88,5 +89,10 @@ public class User {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+
+    public void setCallnow(String callnow) {
+        this.callnow = callnow;
     }
 }

@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
@@ -129,10 +130,16 @@ public class DonorRegistrationActivity extends AppCompatActivity {
               final String idNumber = registerIdNumber.getText().toString().trim();
               final String phoneNumber = registerPhoneNumber.getText().toString().trim();
               final String bloodGroup = bloodGroupsSpinner.getSelectedItem().toString();
-              if (TextUtils.isEmpty(email)){
+              if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
                   registerEmail.setError("Email is required!");
                   return;
               }
+              if (email.isEmpty()){
+                  registerEmail.setError("Enter Email Adress");
+                  registerEmail.requestFocus();
+                  return;
+              }
+
                 if (TextUtils.isEmpty(password)){
                     registerPassword.setError("Password is required!");
                     return;
@@ -145,7 +152,15 @@ public class DonorRegistrationActivity extends AppCompatActivity {
                     registerIdNumber.setError("Id Number is required!");
                     return;
                 }
-                if (TextUtils.isEmpty(phoneNumber)&&phoneNumber.length()>11){
+                if (phoneNumber.length()<11){
+
+                }
+                if (phoneNumber.length()>11){
+                    Toast.makeText(getApplicationContext(), "Enter Valid Phone No", Toast.LENGTH_SHORT).show();
+                    return;
+
+                }
+                if (TextUtils.isEmpty(phoneNumber)){
                     registerPhoneNumber.setError("Phone Number is required!");
                     return;
                 }
@@ -164,6 +179,8 @@ public class DonorRegistrationActivity extends AppCompatActivity {
                             if (!task.isSuccessful()){
                                String error = task.getException().toString();
                                 Toast.makeText(DonorRegistrationActivity.this, "Error" + error, Toast.LENGTH_SHORT).show();
+                                loader.dismiss();
+
                             }
                             else {
                                 String currentUserId = mAuth.getCurrentUser().getUid();

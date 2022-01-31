@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:id="@+id/mainLayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginEnd="5dp"
@@ -73,18 +73,38 @@
 
 
 
-        <Button
-            android:id="@+id/emailNow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/buttons_background"
-            android:text="Email"
-            android:visibility="gone"
-            android:textAllCaps="false"/>
+
+
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/calllNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/buttons_background"
+        android:text="Call Now"
+        android:textAllCaps="false"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/emailNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_gravity="center_vertical"
+        android:layout_below="@id/calllNow"
+        android:background="@drawable/buttons_background"
+        android:text="Email"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        android:textAllCaps="false"/>
 
     <View
         android:layout_below="@id/mainLayout"

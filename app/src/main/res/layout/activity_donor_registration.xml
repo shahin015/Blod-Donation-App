@@ -36,7 +36,7 @@
 
             <TextView
 
-                android:text="Donor Registration"
+                android:text="রক্তদাতা Registration"
                 android:textColor="#000"
                 android:textSize="25sp"
                 android:textStyle="bold"
@@ -125,6 +125,7 @@
                         android:drawablePadding="10dp"
                         android:inputType="number"
                         android:textColor="#000"
+                        android:maxLength="11"
                         android:textSize="18sp"
                         android:textColorHint="#000"
                         android:drawableStart="@drawable/ic_phone"/>

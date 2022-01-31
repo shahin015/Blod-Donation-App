@@ -28,8 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
 
     private ProgressDialog loader;
-    private FirebaseAuth mAuth;
 
+    private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
@@ -38,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -116,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(authStateListener);
+       mAuth.addAuthStateListener(authStateListener);
     }
 
     @Override
